@@ -1,0 +1,501 @@
+
+.quotation
+{
+	font-size:22px;
+	color:#fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight:500;
+	letter-spacing:5px;
+	background-color:#00a1d2;
+	width:95%;
+	height:30px;
+	margin-top:2px;
+	text-shadow:-1px -1px #CE5709;
+	padding:3px 0px 0px 0px;
+}
+.quotationT
+{
+	font-size:20px;
+	color:#fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight:400;
+	letter-spacing:4px;
+	background-color:#00a1d2;
+	width:90%;
+	height:30px;
+	margin-top:2px;
+	text-shadow:-1px -1px #CE5709;
+	padding:3px 0px 0px 0px;
+}
+.quotationI
+{
+	font-size:22px;
+	color:#fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight:500;
+	letter-spacing:5px;
+	background-color:#00a1d2;
+	width:80%;
+	height:30px;
+	margin-left:100px;
+	margin-top:2px;
+	text-shadow:-1px -1px #CE5709;
+	padding:3px 0px 0px 0px;
+}
+
+.q_info4
+{
+	margin-left:550px;	
+	margin-top:-400px;
+	height:400px;
+}
+.q_info5
+{
+	margin-left:550px;	
+	margin-top:-300px;
+	height:300px;
+}
+.l_form
+{
+	margin-left:125px;
+	margin-top:30px;
+	font-size:18px;
+	color:#999;
+	border:none;
+}
+#cname
+{
+	width:275px;
+	height:30px;
+	background-color:#333;	
+	font-size:18px;
+	color:#fff;
+	border:none;	
+}
+.q_in
+{
+	width:250px;
+	height:35px;
+	background-color:#333;
+	/*opacity:0.5;*/
+	font-size:18px;
+	color:#fff;
+	border:none;
+}
+.q_in2
+{
+	width:400px;
+	height:35px;
+	background-color:#333;
+	/*opacity:0.5;*/
+	font-size:18px;
+	color:#fff;
+	border:none;
+}
+
+
+.q_in1
+{
+	width:220px;
+	height:30px;
+	background-color:#333;
+	/*opacity:0.5;*/
+	font-size:18px;
+	color:#fff;
+	border:none;
+}
+
+
+.heading
+{
+	background-color:#333;
+	color:#FFF;
+	height:30px;
+	letter-spacing:1px;
+
+}
+.des
+{
+	width:1000px;
+	
+	margin-left:100px;
+	text-align:center;
+}
+.q_info
+{
+	width:320px;
+	height:250px;
+	margin-left:255px;
+	
+}
+.q_info2
+{
+	width:320px;
+	height:250px;
+	margin-left:680px;
+	margin-top:-260px;
+	
+}
+.q_add
+{
+	width:250px;
+	height:80px;
+	background-color:#333;	
+	font-size:18px;
+	border:none;
+	color:#fff;
+}
+.q_add1
+{
+	width:275px;
+	height:50px;
+	background-color:#333;	
+	font-size:18px;
+	border:none;
+	color:#fff;
+}
+.q_add_i
+{
+	width:175px;
+	height:35px;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	border:none;
+	color:#fff;
+}
+.des_in
+{
+	width:100%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+	border:none;
+	
+}
+.des_cap
+{
+	width:100%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+	border:none;
+}
+.des_ser
+{
+	width:100%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+	border:none;
+}
+.des_amt
+{
+	width:100%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+	border:none;
+}
+.des_r
+{
+	width:100%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+	border:none;
+}
+.des_q
+{
+	width:100%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+	border:none;
+}
+.amt_w
+{
+	margin-left:80px;
+	
+}
+.des_w
+{
+	width:69%;
+	height:125%;
+	background-color:#333;
+	opacity:0.5;
+	font-size:18px;
+	color:#FFF;
+}
+
+.emp_tab
+{
+	margin-top:5px;
+	width:1200px;
+	height:auto;
+}
+.emp_tab1
+{
+	margin-top:5px;
+	width:1200px;
+	height:auto;
+}
+.emp_tab1 tr td
+{
+	text-align:left;
+}
+.f
+{
+	background-color:#999;
+	height:25px;
+	color:#000;
+	
+}
+.n
+{
+	
+	background-color:#00a1d2;
+	color:#000;
+	padding:2px 0px 2px 0px;
+	font-size:12px;
+	font-weight:bold;
+	border:1px solid #000;
+	
+}
+.n a
+{
+	text-decoration:none;
+	color:#000;
+}
+.n:hover
+{
+	background-color:#F00;
+}
+
+.emp_header td
+{
+	height:25px;
+	text-align:center;
+	background-color:#333;
+	color:#00a1d2;
+	font-size:14px;
+	letter-spacing:2px;
+}
+.addemp_tab
+{
+	width:500px;
+	height:300px;
+	margin-top:20px;
+	margin-left:400px;
+}
+.addpay_tab
+{
+	width:500px;
+	height:600px;
+	margin-top:20px;
+	margin-left:400px;
+}
+.testing1
+{
+	
+	height:300px;
+	width:800px;
+}
+.test2
+{
+	
+	height:500px;
+	width:800px;
+}
+.test3
+{
+	
+	height:250px;
+	width:385px;
+}
+.addemp_b
+{
+	margin-top:-10px;
+	margin-left:585px;
+}
+.addamc_b
+{
+	margin-top:20px;
+	margin-left:560px;
+}
+.addemp_button
+{
+	margin-top:20px;
+	margin-left:570px;
+}
+
+.toptext
+{
+    height:75px;
+	margin-top:40px;		
+	margin-left:0px;
+}
+.midtext
+{
+    height:50px;
+	margin-top:10px;		
+	margin-left:250px;
+}
+.desc
+{
+	width:630px;
+	display:block;
+	background-color:#00a1d2;
+	font-size:20px;
+	color:#600;
+	text-align:center;
+	margin-left:-40;
+	
+	}
+
+.desc1
+{
+	width:630px;
+	display:block;
+	background-color:#00a1d2;
+	font-size:20px;
+	color:#600;
+	text-align:center;
+	margin-left:400;
+	margin-top:-305;
+	}
+
+.q_clients
+{
+	margin-top:20px;
+	width:320px;
+	height:450px;
+	margin-left:250px;
+}
+.q_clients2
+{
+	margin-top:-450px;
+	width:320px;
+	height:450px;
+	margin-left:675px;
+}
+.w_clients2
+{
+margin-top:10px;
+	width:420px;
+	height:200px;
+	margin-left:375px;	
+	}
+
+.q_clients1
+{
+	margin-top:-300px;
+	width:640px;
+	height:430px;
+	margin-left:630px;
+}
+.q_client_s
+{
+	margin-top:10px;
+	width:640px;
+	height:230px;
+	margin-left:-40px;
+}
+.q_clients_2
+{
+	margin-top:10px;
+	width:640px;
+	height:150px;
+	margin-left:250px;
+}
+.q_clients3
+{
+	margin-top:10px;
+	width:640px;
+	height:300px;
+	margin-left:250px;
+}
+.q_clients4
+{
+	margin-top:20px;
+	width:320px;
+	height:250px;
+	margin-left:250px;
+}
+
+.addclients_b
+{
+	margin-top:30px;
+	margin-left:38px;
+}
+
+
+select
+{
+	width:186px;
+}
+.a
+{
+ background:#333;
+ height:35px;
+ color:#FFF;
+ letter-spacing:2px;
+ opacity:0.5;
+ border:none;
+}
+option
+{
+	background:#FFF;
+	color:#000;
+}
+.checklist
+{
+	margin-top:10px;
+	margin-left:150px;
+	width:862px;
+	height:510px;
+	text-align:center
+}
+.c_info
+{
+	width:500px;
+	height:100px;
+}
+.c_in
+{
+	width:350px;
+	height:25px;
+	background-color:#333;
+	opacity:0.5;
+	border:none;
+	font-size:18px;
+	color:#fff;
+}
+.c_last
+{
+	height:100px;
+	width:500px;
+	margin-left:150px;
+}
+.addclients_c
+{
+	margin-top:-50px;
+	margin-left:705px;
+}
+.total
+{
+	height:30px;
+	width:140px;
+}
