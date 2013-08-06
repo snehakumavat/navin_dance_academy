@@ -9,7 +9,6 @@ if(isset($_POST['Submit']))
  
 $name=$_POST['name'];
 $gender=$_POST['gender'];
-$pic=$_FILES['pic'];
 $address=$_POST['address'];
 $contact=$_POST['contact'];
 $occupation=$_POST['occupation'];
@@ -18,10 +17,27 @@ $batch=$_POST['batch'];
 $time=$_POST['time'];
 $venue=$_POST['venue'];
 $fees=$_POST['fees'];
+$date= $_POST['date'];      //date('Y-m-d',strtotime($_POST['date']));
+$remark=$_POST['remark'];
 
+$uploadDir = 'imgs/';
+if($_FILES['pic']['name']!='')
+		{
+		$fileName = $_FILES['pic']['name'];
+		$appendval=time();
+		$fileName=$appendval.$fileName;				
+		$tmpName  = $_FILES['pic']['tmp_name'];
+		$fileSize = $_FILES['pic']['size'];
+		$fileType = $_FILES['pic']['type'];
+		$filePath = $uploadDir . $fileName;
+		$result = move_uploaded_file($tmpName, $filePath);
+		}
+		else
+			$filePath='-';
 
 // Insert data into mysql 
- $sql="INSERT INTO form(name,gender,pic,address,contact,occupation,email,batch,time,venue,fees)VALUES('$name', '$gender', '$pic','$address','$contact','$occupation','$email','$batch','$time','$venue','$fees')";
+ $sql="INSERT INTO form(name,gender,pic,address,contact,occupation,email,batch,time,venue,fees,remark,date)
+ VALUES('$name','$gender','$filePath','$address','$contact','$occupation','$email','$batch','$time','$venue','$fees','$remark','$date')"; 
 $result=mysql_query($sql);
 // if successfully insert data into database, displays message "Successful". 
 if($result)
@@ -36,7 +52,7 @@ echo "ERROR";
 }
 if(isset($_POST['Cancel']))
 {
-	header("location:home.php");
+	header("location:reg.php");
 }
 ?> 
 
@@ -55,6 +71,28 @@ mysql_close();
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Navin's Dance Academy</title>
 <link rel="stylesheet" href="styles/layout.css" type="text/css" />
+<link rel="stylesheet" type="text/css" media="all" href="calender/jsDatePick_ltr.min.css" />
+<script type="text/javascript" src="calender/jsDatePick.min.1.3.js"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		new JsDatePick({
+			useMode:2,
+			target:"inputField",
+			dateFormat:"%Y-%m-%d"
+			/*selectedDate:{				This is an example of what the full configuration offers.
+				day:5,						For full documentation about these settings please see the full version of the code.
+				month:9,
+				year:2006
+			},
+			yearsRange:[1978,2020],
+			limitToToday:false,
+			cellColorScheme:"beige",
+			dateFormat:"%m-%d-%Y",
+			imgPath:"img/",
+			weekStartDay:1*/
+		});
+	};
+</script>
 <script language="javascript" type="text/javascript">
 function Validation()
 {
@@ -122,7 +160,7 @@ textarea{
         </center>
       </div>
       <div>
-        <form name="form1" action="" method="post">
+        <form name="form1" action="" method="post" enctype="multipart/form-data">
         
       <table class="q_info3">
             <tr>
@@ -138,6 +176,7 @@ textarea{
         <input type="radio" name="gender" id="gender" value="f" /> Female
     </p>
 </td>
+
 </tr>
 <tr>
 <td>Photo: </td>
@@ -152,6 +191,12 @@ textarea{
 <td> <input type="text" name="contact" id="contact"  class="q_in"       />
 </td>
 </tr>
+<tr>
+<td>Date:</td>
+<td>
+    <input id="inputField" name="date" size='12'  title='D-MM-YYYY' value="<?php echo date('Y-m-d') ?>"  /> 
+    </td>
+    </tr>
 </table>
 <table class="q_info4">
 <tr>
@@ -180,7 +225,12 @@ textarea{
 <td>Fees Per Month:</td>
 <td> <input type="text" name="fees" id="fees"   class="q_reg"     /> </td>
 </tr>
-
+<tr>
+<td>Remark:</td>
+<td>
+    <textarea class="q_add" name="remark"> </textarea>
+    </td>
+    </tr>
 </table>
 <div class="reg_button">
 <input type="submit" name="Submit" class="formbutton" value="Submit" onclick="javascript:return Validation();" >

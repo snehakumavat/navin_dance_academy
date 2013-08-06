@@ -30,10 +30,8 @@ session_start();
 		  	{
 			  $_SESSION['uname']=$_POST['username'];
 		      $_SESSION['password']=$_POST['password'];
-			  $tim=date('Y-m-d H:i:s'); //exit();
-			 $query="insert into log_history(`c_name`,`login_time`)values('".$_POST['username']."','".$tim."')";
-			mysql_query($query);
-			 header("Location:home.php");
+			  			
+			 header("Location:reg.php");
 		  	}
 		 else
 			{

@@ -130,9 +130,71 @@ cursor: pointer;
                
      </ul>
  </div>
+<?php
+		
+		if(isset($_REQUEST['search']))
+		  {
+		 	 $srch=$_REQUEST['search'];	
+			 if($srch!=NULL)
+		 $query="select * from form where stud_id LIKE '%$srch%' OR name LIKE '%$srch%' OR contact LIKE '%$srch%' OR email LIKE '%$srch%' OR date LIKE '%$srch%'";
+		$ans=mysql_query($query);	 
+	 
+	?>
+	
+		<table class="emp_tab">        
+		<?php
+        if(mysql_num_rows($ans)==0)
+		{
+		?>
+        <tr class='pagi'>
+         <td colspan='6' align="center"><h3> No Data available</h3></td>
+        </tr>
+		
+		<?php
+        }
+		while($row=mysql_fetch_array($ans))
+		{			
+      	    echo "<tr class='pagi'>";
+			echo "<td width='80'>";
+			echo $row[0];
+			echo "</td>";
+			echo "<td width='250'>";
+			echo $row[1];
+			echo "</td>";
+			echo "<td width='160'>";
+			echo $row[4];
+			echo "</td>";
+			echo "<td>";
+			echo $row[5];
+			echo "</td>";
+			echo "<td>";
+			echo $row[7];		
+			echo "</td>";
+			echo "<td>";
+			echo $row[11];		
+			echo "</td>";
+			echo "<td class='print'>";
+			echo "<a href='pay.php?id=$row[0]'>&nbsp;&nbsp;&nbsp;Pay&nbsp;&nbsp;&nbsp;</a>";		
+			echo "</td>";
+			echo "</tr>";
+		}
+		?>        
+        </table>	
+	<?php
+		}
+?>
+                
+                <br />
 <br />
- <div class="quotation" align="center">List Of  Register Student</div>
-
+<form action="" method="post" name="search">
+				<table class="quotation">
+                <tr>
+                <td class="info">List Of  Register Student</td>
+                <td width="500px"><input type='text' name="search" class="result" title="Enter Student Id,Cotact no,name,email_id here.." />
+                    <input type="submit" name="result" value="search" class="go" /></td>
+                </tr>
+                </table>
+                </form>
 	<div id="loading" ></div>
 		<div id="content" ></div>
         <table width="800px">

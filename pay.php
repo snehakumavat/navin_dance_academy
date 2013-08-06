@@ -54,7 +54,28 @@ $bal=$row[11]-$row_sum[0];
 <link rel="stylesheet" href="styles2.css" type="text/css" />
 <link rel="stylesheet" href="styles.css" type="text/css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
-
+<link rel="stylesheet" type="text/css" media="all" href="calender/jsDatePick_ltr.min.css" />
+<script type="text/javascript" src="calender/jsDatePick.min.1.3.js"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		new JsDatePick({
+			useMode:2,
+			target:"inputField",
+			dateFormat:"%Y-%m-%d"
+			/*selectedDate:{				This is an example of what the full configuration offers.
+				day:5,						For full documentation about these settings please see the full version of the code.
+				month:9,
+				year:2006
+			},
+			yearsRange:[1978,2020],
+			limitToToday:false,
+			cellColorScheme:"beige",
+			dateFormat:"%m-%d-%Y",
+			imgPath:"img/",
+			weekStartDay:1*/
+		});
+	};
+</script>
 </head>
 <body>
 <div id="container">
@@ -129,7 +150,7 @@ $bal=$row[11]-$row_sum[0];
         </tr>
         <tr>
         <td class="l_form">Date:</td>
-        <td><input id="des" type="text" class="q_in" name="t2" value="<?php echo $d; ?>"></td>
+        <td><input id="inputField" name="date" size='12' class="q_in"  title='D-MM-YYYY' value="<?php echo date('Y-m-d') ?>"  /> </td>
         </tr>
         
         <tr>

@@ -131,9 +131,107 @@ cursor: pointer;
                
      </ul>
  </div>
+ <?php
+		
+		if(isset($_REQUEST['search']))
+		  {
+		 	 $srch=$_REQUEST['search'];	
+			 if($srch!=NULL)
+		$sql = "select * from form  where stud_id LIKE '%$srch%' OR name LIKE '%$srch%' OR contact LIKE '%$srch%' OR email LIKE '%$srch%' OR date LIKE '%$srch%'";
+        $ans = mysql_query($sql);	 
+		?>
+<table class="emp_tab">
+<?php
+        if(mysql_num_rows($ans)==0)
+		{
+		?>
+        <tr class='pagi'>
+         <td colspan='6' align="center"><h3> No Data available</h3></td>
+        </tr>
+		
+		<?php
+        }
+       
+		
+        while($row=mysql_fetch_array($ans))
+      	{
+		 
+	      $ta=$row[11];
+		  $id=$row[0];	
+		  
+	     $sql1 = "select *,SUM(p_amt) as amt from partial_payment where s_id='$id' ";
+	      $rsd1 = mysql_query($sql1);
+		          
+		
+		if($row1=mysql_fetch_array($rsd1))
+		{
+			$ta1=$row1['amt'];	
+	        $id=$row1[1];
+			
+	        if($ta1 < $ta)
+	        {
+			echo "<tr class='pagi'>";
+			echo "<td width='80'>";
+			echo $row[0];
+			echo "</td>";
+			echo "<td>";
+			echo $row[1] ;
+			echo "</td>";
+			echo "<td width='250'>";
+			echo $row[4];
+			echo "</td>";
+			echo "<td width='160'>";
+			echo $row[5];
+			echo "</td>";
+			echo "<td width='250'>";
+			echo $row[7];
+			echo "</td>";
+			echo "<td>";
+			echo $row[11];
+			echo "</td>";
+			echo "<td class='print'>";
+			 }
+			 else
+			 {
+				echo "<tr class='pagi'>";
+			echo "<td width='80'>";
+			echo $row[0];
+			echo "</td>";
+			echo "<td>";
+			echo $row[1] ;
+			echo "</td>";
+			echo "<td colspan='4'>";
+			echo 'Fee paid ' ;
+			echo "</td>"; 
+				 }
+			 }
+			 else
+			 {
+			 ?>
+				 <tr class='pagi'>
+         <td colspan='6' align="center"><h3> No Data available</h3></td>
+        </tr>
+				 <?php
+                 }
+	  
+   }
+		?>        
+        </table>	
+	<?php
+		}
+?>
+                
+                <br />
 <br />
- <div class="quotation" align="center">List Of Unpaid Student</div>
-
+<form action="" method="post" name="search">
+				<table class="quotation">
+                <tr>
+                <td class="info">List Of Unpaid Student</td>
+                <td width="500px"><input type='text' name="search" class="result" title="Enter Student Id,Cotact no,name,email_id here.." />
+                    <input type="submit" name="result" value="search" class="go" /></td>
+                </tr>
+                </table>
+                </form>
 	<div id="loading" ></div>
 		<div id="content" ></div>
         <table width="800px">

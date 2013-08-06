@@ -1,8 +1,12 @@
 <?php
 include("session.php"); 
 include("include/database.php");
-error_reporting(0);
-
+//error_reporting(0);
+$per_page = 20; 
+$sql = "select * from sms";
+$rsd = mysql_query($sql);
+$count = mysql_num_rows($rsd);
+echo $pages = ceil($count/$per_page);
 ?>
 
 <html>
@@ -10,8 +14,62 @@ error_reporting(0);
 <title>Navin's Dance Academy</title>
 <link rel="stylesheet" href="styles2.css" type="text/css" />
 <link rel="stylesheet" href="styles.css" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/slider.js"></script>
+<script type="text/javascript" src="js/superfish.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		
+	//Display Loading Image
+	function Display_Load()
+	{
+	    $("#loading").fadeIn(900,0);
+	
+	}
+	//Hide Loading Image
+	function Hide_Load()
+	{
+		$("#loading").fadeOut('slow');
+	};
+	
+
+    //Default Starting Page Results
+   
+	$("#pagination li:first").css({'color' : '#FF0084'}).css({'border' : 'none'});
+	
+	Display_Load();
+	
+	$("#content").load("reportpaging.php?page=1", Hide_Load());
+
+
+
+	//Pagination Click
+	$("#pagination li").click(function(){
+			
+		Display_Load();
+		
+		//CSS Styles
+		$("#pagination li")
+		.css({'color' : '#0063DC'});
+		
+		$(this)
+		.css({'color' : '#FF0084'})
+		.css({'border' : 'none'});
+
+		//Loading Data
+		var pageNum = this.id;
+		
+		$("#content").load("reportpaging.php?page=" + pageNum, Hide_Load());
+	});
+	
+	
+});
+	</script>
+	
 	
 	
 <style>
@@ -80,45 +138,25 @@ cursor: pointer;
 <br />
  <div class="quotation" align="center">Sent Report Details</div>
 
-	<div id="loading" ></div>
+	
+                 
+                <div id="loading" ></div>
 		<div id="content" ></div>
-        <?php
-			if(isset($_POST['Submit']))
-{
-	$date1=date('d-m-Y',strtotime($_POST['startdate']));
-	$date2=date('d-m-Y',strtotime($_POST['enddate']));
-	$u1 = 'http://bulksms.mysmsmantra.com:8080/WebSMS/sentreport.jsp?';
- $u2= 'username='.urlencode('wave').'&password='. urlencode('1492407050').'&fromdate='.$date1.'&todate='.$date2;
+        <table width="800px">
+	<tr><Td>
+			<ul id="pagination">
+				<?php
+						
+				//Show page links
+				for($i=1; $i<=$pages; $i++)
+				{								
+					echo '<li id="'.$i.'">'.$i.'</li>';
+				}
+				?>
+	</ul>	
+	</Td></tr></table>
 
-$murl=$u1.$u2;
-
-$ch = curl_init($murl);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $u2);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($ch);?>
-<table border="1">
-<tr>
-<th>
-</tr>
-<tr>
-<td>
-<?php
-echo $response;
-$pieces = explode(",", $response);
-echo $pieces[0]; // piece1
-echo $pieces[1]; // piece2
-?>
-</td>
-</tr>
-</table>
-<?php
-curl_close($ch);  
-
-		
-	}
-			?>
- </div>                
+                </div>                
                
   				</div>
                 

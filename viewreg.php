@@ -58,13 +58,15 @@ textarea{
       <div class="quotation">
         <center>
           REGISTRATION FORM
+          
         </center>
+        <input type="button" style="background:#0CF; width:100px; background-color:#09F"  value="Back"  onClick="javascript:window.history.back();">
       </div>
       <div>
       
 <table class="q_info3">
 <tr>
-<td colspan="2"><?php echo "<img src=imgs/$row[3] width='100' height='100'>"; ?></td>
+<td colspan="2"><?php echo "<img src='$row[3]' width='100' height='100'>"; ?></td>
 </tr>
 
 <tr>
@@ -84,6 +86,11 @@ textarea{
 <tr>
 <td> Contact No: </td>
 <td><?php echo $row[5]; ?> 
+</td>
+</tr>
+<tr>
+<td> Date: </td>
+<td><?php echo $row[13]; ?> 
 </td>
 </tr>
 </table>
@@ -113,6 +120,11 @@ textarea{
 <tr>
 <td>Fees</td>
 <td><?php echo $row[11]; ?> </td>
+</tr>
+<tr>
+<td>Remark: </td>
+<td><?php echo $row[12]; ?> 
+</td>
 </tr>
 
 </table>

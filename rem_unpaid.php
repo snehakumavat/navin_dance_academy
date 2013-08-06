@@ -169,7 +169,7 @@ $response = curl_exec($ch);
 if($response)
 {
 $date=date('Y-m-d H:i:s');
-$quy="insert into sms(receiver,message,response,date)values('".$row[5]."','".$message."','".$response."','".$date."')";
+$quy="insert into sms(s_id,receiver,message,response,date)values('".$id."','".$row[5]."','".$message."','".$response."','".$date."')";
 $res=mysql_query($quy);
 }
 curl_close($ch);  
@@ -177,7 +177,7 @@ curl_close($ch);
 				 }
 			}
 		}
-		echo "<h4>Message Send Successfully</h4>";
+		header("Location:report.php");
 	}
 ?> 
   

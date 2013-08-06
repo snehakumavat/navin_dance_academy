@@ -134,20 +134,11 @@ cursor: pointer;
 
 	<div id="loading" ></div>
 		<div id="content" ></div>
-        <table width="800px">
-	<tr><Td>
+        
 			<ul id="pagination">
-				<?php
-				//Show page links
 				
-				?>
 	</ul>	
-	</Td></tr></table>
-	            
-                
-                
-                
-                
+	
                 
                 <br />
              

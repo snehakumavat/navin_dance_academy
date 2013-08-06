@@ -130,7 +130,12 @@ cursor: pointer;
      </ul>
  </div>
 <br />
- <div class="quotation" align="center">List Of  Register Student</div>
+<table class="emp_tab">
+<tr>
+<td>List Of  Register Student
+</td>
+</tr>
+ <div class="quotation" align="center"></div>
 
 	<div id="loading" ></div>
 		<div id="content" ></div>

@@ -15,7 +15,7 @@ $res=mysql_query($que);
 
 		<table class="emp_tab">        
 		<tr class='menu_header'>
-        <td>S Id</td>
+        <td>Stud Id</td>
         <td>Name</td>
         <td>Address</td>
         <td>Contact No</td>
