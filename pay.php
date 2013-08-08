@@ -4,39 +4,41 @@ error_reporting(0);
 include("include/database.php");
 
 $id=$_REQUEST['id'];
-
 $qry="select * from form where stud_id='$id'";
-$res=mysql_query($qry);
-$row=mysql_fetch_array($res);
-
-$qry_d="select * from partial_payment where s_id='$id'";
-$res_d=mysql_query($qry_d);
-
-$qry_sum="select SUM(p_amt) from partial_payment where s_id='$id'";
-$res_sum=mysql_query($qry_sum);
-$row_sum=mysql_fetch_array($res_sum);
-
-$bal=$row[11]-$row_sum[0];
-
+		$res=mysql_query($qry);
+		$row=mysql_fetch_array($res);
+		
+	
 
 	if(isset($_REQUEST['e_add']))
 	{
- 		
+		$date=$_POST['date_month'];
+		$year=$_POST['year'];
+	$qry_sum="select *,SUM(p_amt) as amt from partial_payment where s_id='$id' and p_date=$date";
+		$res_sum=mysql_query($qry_sum);
+		$row_sum=mysql_fetch_array($res_sum); 
+		$bal=$row[11]-$row_sum['amt'];
+		//echo "$bal<=0";		
+		if($bal<=0 )
+		{
+			header('Location:pay.php?res='.$date.'&yearp='.$year.'&id='.$id);
+		}else
+		{ 		
  		$t2=$_POST['t2'];
-		$date=date('Y-m-d', strtotime($t2));
+		
 		$t3=$_POST['t3'];
 		$t4=$_POST['t4'];
 		$t5=$_POST['t5'];
-		$pa_qry="insert into partial_payment(s_id,p_date,p_mode,p_check,p_amt) values('".$id."','".$date."','".$t3."','".$t4."','".$t5."')";
-		$pa_res=mysql_query($pa_qry);
-		
+		$pa_qry="insert into partial_payment(s_id,p_date,p_mode,p_check,p_amt,p_year) values('".$id."','".$date."','".$t3."','".$t4."','".$t5."','".$year."')";
+		$pa_res=mysql_query($pa_qry);		
 		if($pa_res)
 		{
-			header("location:pay.php?id=$id");
+			header("location:pay.php?date=$date&year_n=$year&id=$id");
 		}
 		else
 		{
 			echo "error";
+		}
 		}
 	}
 	
@@ -44,8 +46,9 @@ $bal=$row[11]-$row_sum[0];
 	{
 		header("location:payment.php");
 	}
-	
-	$d=date('d-m-Y');
+		
+
+
 ?>
 <html>
 <head>
@@ -89,22 +92,66 @@ $bal=$row[11]-$row_sum[0];
         </div>
         
        	<br />
-		<div class="quotation"><center><?php echo "Student Name:-".$row[1]; ?></center></div>
-        <div>
+		
+        <form action="" method="post" name="data">
+        <table class="quotation">
+        <tr>
+        <td width="700px">
+       <?php echo date_dropdown();?>
+        <?php yearDropdown(); 	?>
+        <input type="submit" value="Search" name="submit" class="go">
+        </td>
+        <td > 
+        <?php echo "Student Name:-".$row[1]; ?>
+        </td>
+
+        </tr>
+        </table>
+        </form>
+        
         <br />
         <table class="detail">
         <tr class="menu_header">
         <td width="80">Date</td>
         <td width="180">Payment Mode</td>
         <td>Cheque No</td>
-        <td width="120">Amount</td>
+        <td>Fees</td>
+        <td width="120">Paid</td>
+        <td>Remaing</td>
+        
+        
         </tr>
         <?php
+		if($_REQUEST['res'] && $_REQUEST['yearp'])
+		{
+		$rest=$_REQUEST['res'];
+		$year=$_REQUEST['yearp'];
+		}elseif( $_REQUEST['date']&& $_REQUEST['n_year'])
+		{
+		$rest=$_REQUEST['date'];
+		$year=$_REQUEST['n_year'];
+		}
+		if($_REQUEST['submit'])
+		{
+		$rest=$_REQUEST['date_month'];
+		$year=$_REQUEST['year'];
+		}
+		$qry_d="select * from partial_payment where s_id='$id' and p_date='$rest' and p_year='$year'";
+		$res_d=mysql_query($qry_d);
+		
+		$qry_sum="select *,SUM(p_amt) as amt from partial_payment where s_id='$id' and p_date='$rest'and p_year='$year'";
+		
+		$res_sum=mysql_query($qry_sum);
+		$row_sum=mysql_fetch_array($res_sum); 
+		$bal=$row[11]-$row_sum['amt'];
+		
 		while($row_d=mysql_fetch_array($res_d))
 		{
+			
 			echo "<tr class='pagi'>";
-			echo "<td>";
-			echo date('d-m-Y', strtotime($row_d[3]));
+			echo "<td>";			
+			$pre=date('F',mktime(0,0,0,$row_d[3],10));			
+			echo $pre;							
 			echo "</td>";
 			echo "<td>";
 			echo $row_d[2];
@@ -113,31 +160,67 @@ $bal=$row[11]-$row_sum[0];
 			echo $row_d[4];
 			echo "</td>";
 			echo "<td>";
-			echo $row_d[5].'&nbsp;'.'Rs/-';
+			echo $row[11].'&nbsp;'.'Rs/-';
 			echo "</td>";
+			echo "<td> $row_d[5] Rs/- </td>";
+			$remain=$row[11]-$row_d[5];			
+			$bal1+=$row_d[5];
+			
+			$remain=$row[11]-$bal1;	
+			echo "<td>$remain Rs/- </td>";
+
 			echo "</tr>";
 		}
+		
+		
+function date_dropdown($year_limit = 0)
+{
+        $html_output = '<div id="date_select" >'."\n";
+           /*months*/
+        $html_output .= '<select name="date_month" id="month_select" >'."\n";
+        $months = array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+		$m=date('n');
+            for ($month = 1; $month <= 12; $month++) {
+				
+			if($month==$m)				                
+			{
+					$html_output .= '<option value="' . $month . '" selected >' . $months[$month] . '</option>'."\n";
+			}
+			else
+			{
+				$html_output .= '<option value="' . $month . '" >' . $months[$month] . '</option>'."\n";
+			}
+            }
+        $html_output .= '           </select>'."\n";
+
+    return $html_output;
+}		
+function yearDropdown($id="year" ){ 
+    //start the select tag	
+	 $endyear=(date('Y')+20) ;
+	 $year=date('Y');
+	 	
+    echo "<select id=".$id." name=".$id.">n"; 
+          
+        //echo each year as an option     
+        for ($i=date('Y')-13;$i<=$endyear;$i++){ 
+		if($i==$year)
+        echo "<option value='".$i."' selected>".$i."</option>";     
+		else
+		echo "<option value='".$i."'>".$i."</option>";     
+        } 
+      
+    //close the select tag 
+    echo "</select>"; 
+} 
+	
 		?>
-        <tr class="pagi">
-        <td width="50"></td>
-        <td></td>
-        <td>Total Paid Amount</td>
-        <td><?php echo $row_sum[0].'&nbsp;'.'Rs/-'; ?></td>
-        </tr>
-        <tr class="pagi">
         
-        <td width="50"></td>
-        <td></td>
-        <td>Total Fees</td>
-        <td><?php echo $row[11].'&nbsp;'.'Rs/-'; ?></td>
-        </tr>
         
 		<tr class='menu_header'>
 			
-		<td width='50'></td>
-		<td></td>
-		<td>Balance</td>
-		<td><?php echo $bal."&nbsp;Rs/-"; ?></td>
+		<td colspan="6"></td>
+		
 		</tr>
 		
         </table>
@@ -149,8 +232,21 @@ $bal=$row[11]-$row_sum[0];
         <td><input id="ename" type="text" readonly class="q_in" name="t1" value="<?php echo $id; ?>"></td>
         </tr>
         <tr>
-        <td class="l_form">Date:</td>
-        <td><input id="inputField" name="date" size='12' class="q_in"  title='D-MM-YYYY' value="<?php echo date('Y-m-d') ?>"  /> </td>
+        <td class="l_form">Select Month:-</td>
+        <td>
+		<?php
+        	echo date_dropdown();
+		?>
+        </td>
+       
+        </tr>
+        <tr>
+        <td>Select Year:-</td>
+        <td>		
+		<?php
+       	 yearDropdown();  
+		
+		?></td>
         </tr>
         
         <tr>
@@ -183,9 +279,16 @@ $bal=$row[11]-$row_sum[0];
         <div class="pay_button">
          <input name="e_add" class="formbutton" value=" Add " type="submit" onClick="javascript:return validateMyForm();" />
          <input name="e_can" class="formbutton" value="Cancel" type="submit" />
-        </div>
-        
+        </div>        
         </form>
+        <?php
+        if(isset($_REQUEST['res'])&&isset($_REQUEST['yearp']))
+		{
+			$month=date(F,mktime(0,0,0,$_REQUEST['res'],10));
+			$yer=$_REQUEST['yearp'];
+			echo "<center><font  color='#CC0000' size='+2'>Fees for $month $yer is completed please select next month</font>";
+			}
+		?>
     </div>
     </div>
         

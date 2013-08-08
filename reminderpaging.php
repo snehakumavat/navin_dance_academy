@@ -2,10 +2,10 @@
 include("session.php"); 
 include("include/database.php");
 
-$per_page = 10; 
+$per_page = 15; 
 if($_GET)
 {
- echo $page=$_GET['page'];
+  $page=$_GET['page'];
 }
 $start = ($page-1)*$per_page;
 $que="select * from form order by stud_id desc limit $start,$per_page";
@@ -15,7 +15,7 @@ $res=mysql_query($que);
 
 		<table class="emp_tab">        
 		<tr class='menu_header'>
-        
+         
         <td>Stud Id</td>
         <td>Name</td>
         <td>Address</td>
@@ -33,16 +33,8 @@ $res=mysql_query($que);
       {
 		  $ta=$row[11];   //student Fee
 	      $id=$row[0];
-		  
-		   if(isset($_REQUEST['month']) && $_REQUEST['month']!='x')
-		  {
-			 echo $month=$_REQUEST['month'];
-		  }
-		elseif($_REQUEST['month']=='x')
-			{
-		  	echo $month=date('n');
-			}
-        $sql1 = "select *,SUM(p_amt) as amt from partial_payment where s_id='$id' and p_date='$month' ";
+		   $month=date('n');
+          $sql1 = "select *,SUM(p_amt) as amt from partial_payment where s_id='$id' ";
 	      $rsd1 = mysql_query($sql1);
 		  //$cnt=mysql_num_rows($rsd1);
 		  

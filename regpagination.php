@@ -1,13 +1,23 @@
 <?php
 include("session.php"); 
 include("include/database.php");
-$per_page = 25; 
+$per_page = 30; 
 if($_GET)
 {
 $page=$_GET['page'];
 }
+if(isset($_REQUEST['batch']))
+{
+$batch=$_REQUEST['batch'];
+if($batch==1)
+$bat='';
+else
+$bat="where batch='$batch'";
+}else
+$bat='';
+
 $start = ($page-1)*$per_page;
-$que="select * from form order by stud_id desc limit $start,$per_page";
+echo $que="select * from form $bat order by stud_id desc limit $start,$per_page";
 $res=mysql_query($que);
 ?>
 
@@ -16,6 +26,7 @@ $res=mysql_query($que);
         <td>S Id</td>
         <td>Name</td>
         <td>Address</td>
+        <td>Batch</td>
         <td>Contact No</td>
         <td>Email Id</td>
         <td colspan="2">Action</td>
@@ -33,6 +44,9 @@ $res=mysql_query($que);
 			echo "</td>";
 			echo "<td width='160'>";
 			echo $row[4];
+			echo "</td>";
+			echo "<td width='140'>";
+			echo $row[8];
 			echo "</td>";
 			echo "<td>";
 			echo $row[5];

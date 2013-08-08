@@ -6,7 +6,7 @@ $per_page = 20;
 $sql = "select * from sms";
 $rsd = mysql_query($sql);
 $count = mysql_num_rows($rsd);
-echo $pages = ceil($count/$per_page);
+$pages = ceil($count/$per_page);
 ?>
 
 <html>

@@ -2,12 +2,17 @@
 include("session.php"); 
 include("include/database.php");
 error_reporting(0);
-$per_page = 25; 
+$per_page = 30; 
 $sql = "select * from form";
 $rsd = mysql_query($sql);
 $count = mysql_num_rows($rsd);
 $pages = ceil($count/$per_page)
-
+?>
+<?php
+if(isset($_REQUEST['submit']))
+{
+$batch=$_REQUEST['batch'];
+}
 ?>
 
 <html>
@@ -41,7 +46,7 @@ $pages = ceil($count/$per_page)
 	
 	Display_Load();
 	
-	$("#content").load("regpagination.php?page=1", Hide_Load());
+	$("#content").load("regpagination.php?page=1&batch=<?php if($batch!='') echo $batch; else echo 1; ?>", Hide_Load());
 
 
 
@@ -61,7 +66,7 @@ $pages = ceil($count/$per_page)
 		//Loading Data
 		var pageNum = this.id;
 		
-		$("#content").load("regpagination.php?page=" + pageNum, Hide_Load());
+		$("#content").load("regpagination.php?page=" + pageNum+"batch="+<?php if($batch!='') echo $batch; else echo 1; ?>, Hide_Load());
 	});
 	
 	
@@ -136,7 +141,7 @@ cursor: pointer;
 		  {
 		 	 $srch=$_REQUEST['search'];	
 			 if($srch!=NULL)
-		 $query="select * from form where stud_id LIKE '%$srch%' OR name LIKE '%$srch%' OR contact LIKE '%$srch%' OR email LIKE '%$srch%' OR date LIKE '%$srch%'";
+		 $query="select * from form where stud_id LIKE '%$srch%' OR name LIKE '%$srch%' OR contact LIKE '%$srch%' OR email LIKE '%$srch%' OR date LIKE '%$srch%' OR batch LIKE '%$srch%'";
 		$ans=mysql_query($query);	 
 	 
 	?>
@@ -164,6 +169,9 @@ cursor: pointer;
 			echo "<td width='160'>";
 			echo $row[4];
 			echo "</td>";
+			echo "<td width='140'>";
+			echo $row[8];
+			echo "</td>";
 			echo "<td>";
 			echo $row[5];
 			echo "</td>";
@@ -186,12 +194,36 @@ cursor: pointer;
                 
                 <br />
 <br />
-<form action="" method="post" name="search">
+				<form action="" method="post" name="search">
 				<table class="quotation">
                 <tr>
                 <td class="info">List Of  Register Student</td>
-                <td width="500px"><input type='text' name="search" class="result" title="Enter Student Id,Cotact no,name,email_id here.." />
+                <td width="500px"><input type='text' name="search" class="result" title="Enter Student Id,Cotact no,name,email_id,batch name here.." />
                     <input type="submit" name="result" value="search" class="go" /></td>
+                </tr>
+                </table>
+                </form>
+                <form action="" method="post" name="search">
+				<table >
+                <tr>                 
+                <td width="500px"> 
+                <select name="batch" id="batch">
+<option value="0">Select Batch</option>
+		<?php
+
+        $batch="select * from batch";
+		$rest=mysql_query($batch);
+		if($rest === FALSE) {
+    die(mysql_error()); // TODO: better error handling
+}
+		
+		while($rows=mysql_fetch_array($rest))
+		{
+			echo "<option value='$rows[1]'>$rows[1]</option>";
+		}
+		?>
+        </select>
+                    <input type="submit" name="submit" value="search" class="go" /></td>
                 </tr>
                 </table>
                 </form>

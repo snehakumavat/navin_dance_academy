@@ -3,7 +3,7 @@ include("session.php");
 include("include/database.php");
 //error_reporting(0);
 
-$per_page = 25; 
+$per_page = 7; 
 
 $sql = "select * from form";
 $rsd = mysql_query($sql);
@@ -41,7 +41,7 @@ $pages = ceil($count/$per_page);
 	
 	Display_Load();
 	
-	$("#content").load("unpaidpagination.php?page=1", Hide_Load());
+	$("#content").load("reminderpaging.php?page=1", Hide_Load());
 
 
 
@@ -61,11 +61,20 @@ $pages = ceil($count/$per_page);
 		//Loading Data
 		var pageNum = this.id;
 		
-		$("#content").load("unpaidpagination.php?page=" + pageNum, Hide_Load());
+		$("#content").load("reminderpaging.php?page=" + pageNum, Hide_Load());
 	});
 	
 	
 });
+function validation()
+{
+	var agree=confirm("Do you really want to send sms to all unpaid student?");
+if (agree)
+	return true ;
+else
+	return false ;
+	
+	}
 	</script>
 	
 <style>
@@ -152,11 +161,11 @@ cursor: pointer;
 	        $id=$row1[1];
 	        	if($ta1<$ta)
 	    		 {
-                  $sender = 'wave';
+                  $sender = '';
 				 $message=$msg;
 					
 $u1 = 'http://bulksms.mysmsmantra.com:8080/WebSMS/SMSAPI.jsp?';
-$u2= 'username='.urlencode('wave').'&password='. urlencode('1492407050').'&sendername='.$sender .'&mobileno='
+$u2= 'username='.urlencode(' ').'&password='. urlencode(' ').'&sendername='.$sender .'&mobileno='
 . urlencode($row[5]).'&message='.urlencode($message).'&submit=Submit';
 
 $murl=$u1.$u2;
@@ -170,7 +179,7 @@ if($response)
 {
 $date=date('Y-m-d H:i:s');
 $quy="insert into sms(s_id,receiver,message,response,date)values('".$id."','".$row[5]."','".$message."','".$response."','".$date."')";
-$res=mysql_query($quy);
+//$res=mysql_query($quy);
 }
 curl_close($ch);  
 			 	
@@ -189,7 +198,7 @@ curl_close($ch);
                 <tr>
                 <td class="info">List Of Unpaid Student</td>                
                  <td width="200px;">
-                 <input type="submit" name="sms" value="Send Sms" class="go" width="150px;" />
+                 <input type="submit" name="sms" value="Send Sms" onClick="return validation();" class="go" width="150px;" />
                  </td>
                 </tr>
                 </table>

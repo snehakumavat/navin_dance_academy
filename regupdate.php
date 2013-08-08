@@ -66,10 +66,7 @@ if(isset($_POST['Cancel']))
 }
 ?> 
 
-<?php 
-// close connection 
-mysql_close();
-?>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -181,8 +178,8 @@ return false;
         <td>Gender: </td>
 <td>
     <p>
-        <input type="radio" name="gender" id="gender" value="m" checked="checked"/> Male	
-        <input type="radio" name="gender" id="gender" value="f" /> Female
+        <input type="radio" name="gender" id="gender" value="Male" checked="checked"/> Male	
+        <input type="radio" name="gender" id="gender" value="Female" /> Female
     </p>
 </td>
 </tr>
@@ -222,7 +219,24 @@ return false;
 
 <tr>
 <td>Batch:</td>
-<td> <input type="text" name="batch" id="batch"    class="q_reg" value="<?php echo $row[8]; ?>"    /> </td>
+<td>		
+        <select name="batch" id="batch">
+<option value="0">Select</option>
+<?php
+
+        $batch="select * from batch";
+		$rest=mysql_query($batch);
+		if($rest === FALSE) {die(mysql_error()); }// TODO: better error handling						
+		while($rows=mysql_fetch_array($rest))
+		{		
+			if($row[8]==$rows[1]) 
+			echo "<option value='$rows[1]' selected='selected' >$rows[1]</option>";
+			else
+			echo "<option value='$rows[1]'>$rows[1]</option>";
+		}
+		?>
+        </select>  
+</td>
 </tr>
 <tr>
 <td>Time:</td>

@@ -8,9 +8,14 @@ $sql = "select * from form";
 $rsd = mysql_query($sql);
 $count = mysql_num_rows($rsd);
 $pages = ceil($count/$per_page)
+?>
+<?php
+ if(isset($_REQUEST['submit']))
+	 {
+$month=$_REQUEST['date_month'];
+	 }
 
 ?>
-
 <html>
 <head>
 <title>Navin's Dance Academy</title>
@@ -42,7 +47,7 @@ $pages = ceil($count/$per_page)
 	
 	Display_Load();
 	
-	$("#content").load("paidpagination.php?page=1", Hide_Load());
+	$("#content").load("paidpagination.php?page=1&month=<?php if($month=='')echo 'x'; else echo $month; ?>", Hide_Load());
 
 
 
@@ -62,11 +67,12 @@ $pages = ceil($count/$per_page)
 		//Loading Data
 		var pageNum = this.id;
 		
-		$("#content").load("paidpagination.php?page=" + pageNum, Hide_Load());
+		$("#content").load("paidpagination.php?page=" + pageNum +"&month= "+<?php if($month=='')echo 'x'; else  echo $month; ?>, Hide_Load());
 	});
 	
 	
 });
+
 	</script>
 	
 <style>
@@ -160,8 +166,8 @@ if(mysql_num_rows($ans)==0)
 		 
 	      $ta=$row[11];
 		  $id=$row[0];	
-		  
-	     $sql1 = "select *,SUM(p_amt) as amt from partial_payment where s_id='$id' ";
+		echo   $months=date('n');
+	     $sql1 = "select *,SUM(p_amt) as amt from partial_payment where s_id='$id' and p_date='$months' ";
 	      $rsd1 = mysql_query($sql1);		
 		        
 		if($row1=mysql_fetch_array($rsd1))
@@ -223,6 +229,29 @@ if(mysql_num_rows($ans)==0)
 	<?php
 		}
 		}
+		
+		function date_dropdown($year_limit = 0)
+{
+        $html_output = '<div id="date_select" >'."\n";
+           /*months*/
+        $html_output .= '<select name="date_month" id="month_select" >'."\n";
+        $months = array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+		$m=date('n');
+            for ($month = 1; $month <= 12; $month++) {
+				
+			if($month==$m)				                
+			{
+					$html_output .= '<option value="' . $month . '" selected >' . $months[$month] . '</option>'."\n";
+			}
+			else
+			{
+				$html_output .= '<option value="' . $month . '" >' . $months[$month] . '</option>'."\n";
+			}
+            }
+        $html_output .= '           </select>'."\n";
+
+    return $html_output;
+}	
 ?>
                 
                 <br />
@@ -236,6 +265,18 @@ if(mysql_num_rows($ans)==0)
                 </tr>
                 </table>
                 </form>
+                <form action="" method="post" name="data">
+        <table>
+        <tr>
+        <td width="700px">
+       <?php echo date_dropdown();?>
+       <input type="submit" value="Search" name="submit" class="go">
+        </td>  
+
+        </tr>
+        </table>
+        </form>
+
 
 	<div id="loading" ></div>
 		<div id="content" ></div>

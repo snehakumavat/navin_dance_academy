@@ -55,13 +55,16 @@ textarea{
 
      
       <br />
-      <div class="quotation">
-        <center>
-          REGISTRATION FORM
-          
-        </center>
-        <input type="button" style="background:#0CF; width:100px; background-color:#09F"  value="Back"  onClick="javascript:window.history.back();">
-      </div>
+      <table class="quotation">
+      <tr>
+        <td><input type="button"   value="Back" class="go" style="height:40px;" onClick="javascript:window.history.back();"></td>
+      
+      <td width="1000px;" align="left">        
+          REGISTRATION FORM          
+        </td>
+        </tr>
+        </table>
+      
       <div>
       
 <table class="q_info3">
@@ -90,11 +93,11 @@ textarea{
 </tr>
 <tr>
 <td> Date: </td>
-<td><?php echo $row[13]; ?> 
+<td><?php echo date('d-m-Y',strtotime($row[13])); ?> 
 </td>
 </tr>
 </table>
-<table class="q_info4">
+<table class="q_info4" >
 <tr>
 <td> Occupation:</td>
 <td> <?php echo $row[6]; ?></td>
@@ -123,12 +126,13 @@ textarea{
 </tr>
 <tr>
 <td>Remark: </td>
-<td><?php echo $row[12]; ?> 
+<td  width="20px" ><?php echo ($row[12]); ?> 
 </td>
 </tr>
 
 </table>
 
+</div>
 </div>
 </div>
 </body>

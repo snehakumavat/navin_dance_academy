@@ -1,16 +1,22 @@
 <?php
 include("session.php"); 
 include("include/database.php");
-error_reporting(0);
+//error_reporting(0);
 
-$per_page = 25; 
+$per_page = 10; 
 
 $sql = "select * from form";
 $rsd = mysql_query($sql);
 $count = mysql_num_rows($rsd);
 $pages = ceil($count/$per_page);
 ?>
+<?php
+ if(isset($_REQUEST['submit']))
+	 {
+$month=$_REQUEST['date_month'];
+	 }
 
+?>
 <html>
 <head>
 <title>Navin's Dance Academy</title>
@@ -42,7 +48,7 @@ $pages = ceil($count/$per_page);
 	
 	Display_Load();
 	
-	$("#content").load("unpaidpagination.php?page=1", Hide_Load());
+	$("#content").load("unpaidpagination.php?page=1&month=<?php if($month=='')echo 'x'; else echo $month; ?>", Hide_Load());
 
 
 
@@ -62,7 +68,7 @@ $pages = ceil($count/$per_page);
 		//Loading Data
 		var pageNum = this.id;
 		
-		$("#content").load("unpaidpagination.php?page=" + pageNum, Hide_Load());
+		$("#content").load("unpaidpagination.php?page=&month=<?php if($month=='')echo 'x'; else echo $month; ?>" + pageNum, Hide_Load());
 	});
 	
 	
@@ -219,6 +225,30 @@ cursor: pointer;
         </table>	
 	<?php
 		}
+		
+		
+		function date_dropdown($year_limit = 0)
+{
+        $html_output = '<div id="date_select" >'."\n";
+           /*months*/
+        $html_output .= '<select name="date_month" id="month_select" >'."\n";
+        $months = array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+		$m=date('n');
+            for ($month = 1; $month <= 12; $month++) {
+				
+			if($month==$m)				                
+			{
+					$html_output .= '<option value="' . $month . '" selected >' . $months[$month] . '</option>'."\n";
+			}
+			else
+			{
+				$html_output .= '<option value="' . $month . '" >' . $months[$month] . '</option>'."\n";
+			}
+            }
+        $html_output .= '           </select>'."\n";
+
+    return $html_output;
+}	
 ?>
                 
                 <br />
@@ -232,6 +262,17 @@ cursor: pointer;
                 </tr>
                 </table>
                 </form>
+                <form action="" method="post" name="data">
+        <table>
+        <tr>
+        <td width="700px">
+       <?php echo date_dropdown();?>
+       <input type="submit" value="Search" name="submit" class="go">
+        </td>  
+
+        </tr>
+        </table>
+        </form>
 	<div id="loading" ></div>
 		<div id="content" ></div>
         <table width="800px">
